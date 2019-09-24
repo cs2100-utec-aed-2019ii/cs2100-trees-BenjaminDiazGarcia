@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+using namespace std;
+
 template <typename T>
 class Node{
 public:
@@ -16,17 +18,17 @@ class Tree{
 public:
     Node<T>* root;
 
-    Tree(){
+    Tree() {
         this->root = nullptr;
     }
 
-    explicit Tree(T value){
+    explicit Tree(T value) {
         root->data = value;
         root->left = nullptr;
         root->right = nullptr;
     }
 
-    void print2DUtil(Node<T> *root, int space){
+    void print2DUtil(Node<T> *root, int space) {
         if (root == nullptr)
             return;
 
@@ -48,7 +50,7 @@ public:
         print2DUtil(root, 0);
     }
 
-    bool isEmpty(){
+    bool isEmpty() {
         return root == nullptr;
     }
 
@@ -85,19 +87,20 @@ public:
         return root;
     }
 
-    void clear(Node<T>* root){
-        if( root == NULL )
+    void clear (Node<T>* node){
+        if (node == nullptr)
             return;
-        if( root->left != NULL )
-            clear(root->left );
-        if( root->right != NULL )
-            clear( root->right );
 
-        delete root;
+        clear(node->left);
+        clear(node->right);
+        cout << "\nDelete: " << node->data;
+        delete node;
+
+        this->root = nullptr;
+
     }
 
-    Node<T>* minValueNode(Node<T>* node)
-    {
+    Node<T>* minValueNode(Node<T>* node) {
         Node<T>* current = node;
 
         while (current && current->left != NULL)
