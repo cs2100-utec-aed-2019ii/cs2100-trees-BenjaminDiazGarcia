@@ -2,6 +2,7 @@
 #define BINARY_TREE_TREE_H
 
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -158,6 +159,75 @@ public:
 
     }
 
+    void inorder(Node<T>* node) {
+        if (node == NULL)
+            return;
+        inorder(node->left);
+        cout << node->data << " ";
+        inorder(node->right);
+    }
+
+    void preorder(Node<T>* node) {
+        if (node == NULL)
+            return;
+        cout << node->data << " ";
+        preorder(node->left);
+        preorder(node->right);
+    }
+
+    void postorder(Node<T>* node) {
+        if (node == NULL)
+            return;
+        postorder(node->left);
+        postorder(node->right);
+        cout << node->data << " ";
+    }
+
+    std::vector<Node<T>*> find_ancestors(Node<T>* node) {
+        std::vector<Node<T>*> ancestors;
+        if (node == root || node == NULL)
+            return ancestors;
+        else {
+            T node_key = node->data;
+            Node<T>* temp = root;
+            while (temp != NULL && temp->data != node_key) {
+                ancestors.push_back(temp);
+                if (node_key > temp->data)
+                    temp = temp->right;
+                else
+                    temp = temp->left;
+            }
+            return ancestors;
+        }
+    }
+
+    Node<T>* node_with_value(const T& value) {
+        Node<T>* curr = root;
+
+        while (curr != NULL) {
+            if (value == curr->data) {
+                return curr;
+            } else {
+                if (value > curr->data)
+                    curr = curr->right;
+                else
+                    curr = curr->left;
+            }
+        }
+        return NULL;
+    }
+
+    bool identical(Node<T> *a, Node<T> *b) {
+        if (a == nullptr && b == nullptr)
+            return true;
+
+        if (a != nullptr && b != nullptr) {
+            return ( a->data == b->data && identical(a->left, b->left) && identical(a->right, b->right) );
+        }
+
+        return false;
+    }
+    
     ~Tree(){
         clear(root);
     }
