@@ -24,9 +24,7 @@ public:
     }
 
     explicit Tree(T value) {
-        root->data = value;
-        root->left = nullptr;
-        root->right = nullptr;
+        root = new Node(value);
     }
 
     void print2DUtil(Node<T> *root, int space) {
@@ -101,7 +99,7 @@ public:
 
     }
 
-    Node<T>* minValueNode(Node<T>* node) {
+    Node<T>* min(Node<T> *node) {
         Node<T>* current = node;
 
         while (current && current->left != NULL)
@@ -138,7 +136,7 @@ public:
                 return temp;
             }
 
-            Node<T>* temp = minValueNode(root->right);
+            Node<T>* temp = min(root->right);
 
             root->data = temp->data;
 
@@ -233,4 +231,22 @@ public:
     }
 };
 
-#endif //BINARY_TREE_TREE_H
+template <typename T>
+int is_bst(Node<T> *node, int min, int max);
+
+template <typename T>
+int is_bst(Node<T> *node) {
+    return(is_bst(node, INT_MIN, INT_MAX));
+}
+
+template <typename T>
+int is_bst(Node<T> *node, int min, int max) {
+    if (node == nullptr)
+        return 1;
+
+    if (node->data < min || node->data > max)
+        return 0;
+
+    return is_bst(node->left, min, node->data - 1) && is_bst(node->right, node->data + 1, max);
+}
+#endif
