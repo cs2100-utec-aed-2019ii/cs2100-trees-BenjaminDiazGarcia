@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -35,12 +36,12 @@ public:
 
         print2DUtil(root->right, space);
 
-        std::cout<<std::endl;
+        cout << endl;
 
         for (int i = 2; i < space; i++)
-            std::cout<<" ";
+            cout<<" ";
 
-        std::cout<<root->data<<"\n";
+        cout<<root->data<<"\n";
 
         print2DUtil(root->left, space);
     }
@@ -153,7 +154,7 @@ public:
         if (node == nullptr)
             return 0;
         else
-            return 1 + std::max(height(node->left), height(node->right));
+            return 1 + max(height(node->left), height(node->right));
 
     }
 
@@ -181,8 +182,8 @@ public:
         cout << node->data << " ";
     }
 
-    std::vector<Node<T>*> find_ancestors(Node<T>* node) {
-        std::vector<Node<T>*> ancestors;
+    vector<Node<T>*> find_ancestors(Node<T>* node) {
+        vector<Node<T>*> ancestors;
         if (node == root || node == NULL)
             return ancestors;
         else {
@@ -225,7 +226,57 @@ public:
 
         return false;
     }
-    
+
+    Node<T>* next_node_in_same_level(Node<T>* node) {
+
+        if (node == nullptr || node == this->get_root())
+            return nullptr;
+
+        queue<Node<T>*> q;
+        vector<Node<T>*> vector;
+
+
+        q.push(this->get_root());
+
+        while (!q.empty()) {
+            Node<T>* node2 = q.front();
+
+            q.pop();
+
+            if (node2->left != nullptr) {
+                vector.push_back(node2->left);
+                q.push(node2->left);
+            }
+
+            if (node2->right != nullptr) {
+                vector.push_back(node2->right);
+                q.push(node2->right);
+            }
+
+            for (int i = 0; i < vector.size(); i++){
+                if (vector[i]->data == node->data && i != vector.size()-1)
+                    cout << vector[i+1]->data << " ";
+            }
+            vector.clear();
+        }
+    }
+
+    bool is_height_balanced(Node<T> *node) {
+        int left;
+        int right;
+
+        if (node == NULL)
+            return true;
+
+        left = height(node->left);
+        right = height(node->right);
+
+        if (abs(left - right) <= 1 && is_height_balanced(node->left) && is_height_balanced(node->right))
+            return true;
+
+        return false;
+    }
+
     ~Tree(){
         clear(root);
     }
