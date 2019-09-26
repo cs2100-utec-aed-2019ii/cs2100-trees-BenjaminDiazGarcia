@@ -28,6 +28,60 @@ public:
         root = new Node(value);
     }
 
+    void print(){
+
+        if (root == nullptr) return;
+
+        queue<Node<T>*> q;
+        vector<Node<T>*> vector;
+
+
+        q.push(this->get_root());
+        for (int i = 0; i < this->height(); ++i){
+            cout << "\t";
+        }
+        cout << "\t";
+
+        cout << this->get_root()->data << endl;
+
+        int contador = this->height() - 1;
+
+        while (!q.empty()) {
+            for (int i = 0; i < contador; ++i){
+                cout << "\t";
+            }
+
+            Node<T>* node2 = q.front();
+
+            q.pop();
+
+            if (node2->left != nullptr) {
+                vector.push_back(node2->left);
+                q.push(node2->left);
+            }
+
+            if (node2->right != nullptr) {
+                vector.push_back(node2->right);
+                q.push(node2->right);
+            }
+
+            for (int i = 0; i < vector.size(); i++){
+                if (i%2 != 0){
+                    for (int j = 0; j < contador; ++j) {
+                        cout << "\t";
+                    }                }
+                cout << vector[i]->data;
+            }
+            cout << endl;
+            vector.clear();
+            --contador;
+        }
+    }
+
+    void print2DUtil() {
+        print2DUtil(root, 0);
+    }
+
     void print2DUtil(Node<T> *root, int space) {
         if (root == nullptr)
             return;
@@ -44,10 +98,6 @@ public:
         cout<<root->data<<"\n";
 
         print2DUtil(root->left, space);
-    }
-
-    void print() {
-        print2DUtil(root, 0);
     }
 
     bool isEmpty() {
@@ -255,7 +305,7 @@ public:
 
             for (int i = 0; i < vector.size(); i++){
                 if (vector[i]->data == node->data && i != vector.size()-1)
-                    cout << vector[i+1]->data << " ";
+                    return vector[i+1];
             }
             vector.clear();
         }
