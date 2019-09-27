@@ -18,8 +18,12 @@ int main() {
 
     tree2.insert(5);
     tree2.insert(3);
-    tree2.insert(1);
     tree2.insert(2);
+    tree2.insert(4);
+    tree2.insert(8);
+    tree2.insert(7);
+    tree2.insert(9);
+    tree2.insert(1);
 
 
     ///Buscando ancestros

@@ -120,7 +120,7 @@ public:
 
         clear(node->left);
         clear(node->right);
-        cout << "\nDelete: " << node->data;
+        //cout << "\nDelete: " << node->data;
         delete node;
 
         this->root = nullptr;
@@ -443,7 +443,7 @@ public:
 
         clear(node->left);
         clear(node->right);
-        cout << "\nDelete: " << node->data;
+        //cout << "\nDelete: " << node->data;
         delete node;
 
         this->root = nullptr;
@@ -655,7 +655,7 @@ public:
         return is_bst(node->left, min, node->data - 1) && is_bst(node->right, node->data + 1, max);
     }
 
-    
+
 
     ~BinaryTree(){
         clear(root);
